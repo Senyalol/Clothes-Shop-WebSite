@@ -1,0 +1,17 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Configuration status="WARN" packages="com.fasterxml.jackson.databind">-->
+<!--    <Appenders>-->
+<!--        <Console name="Console" target="SYSTEM_OUT">-->
+<!--            <JsonLayout complete="true" compact="false">-->
+<!--                <KeyValuePair key="timestamp" value="$${date:yyyy-MM-dd HH:mm:ss}"/>-->
+<!--                <KeyValuePair key="application" value="CShop"/>-->
+<!--            </JsonLayout>-->
+<!--        </Console>-->
+<!--    </Appenders>-->
+
+<!--    <Loggers>-->
+<!--        <Root level="${sys:logging.level.root:-INFO}">-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--        </Root>-->
+<!--    </Loggers>-->
+<!--</Configuration>-->

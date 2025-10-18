@@ -1,0 +1,10 @@
+CREATE TABLE users(
+  user_id SERIAL PRIMARY KEY,
+  login VARCHAR(255) NOT NULL ,
+  password VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  balance DOUBLE PRECISION NOT NULL,
+  secret_key VARCHAR(100),
+  role VARCHAR(100) NOT NULL
+);

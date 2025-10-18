@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.ClotheShop</groupId>
+	<artifactId>CShop</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>CShop</name>
+	<description>Demo project for Spring Boot</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>23</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- Миграция Баз данных -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>11.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+			<version>11.1.0</version>
+		</dependency>
+		<!-- Миграция Баз данных -->
+
+		<!-- Зависимости для логов -->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.logging.log4j</groupId>-->
+<!--			<artifactId>log4j-api</artifactId>-->
+<!--			<version>2.25.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.logging.log4j</groupId>-->
+<!--			<artifactId>log4j-core</artifactId>-->
+<!--			<version>2.25.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.logging.log4j</groupId>-->
+<!--			<artifactId>log4j-slf4j-impl</artifactId>-->
+<!--			<version>2.25.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.logging.log4j</groupId>-->
+<!--			<artifactId>log4j-layout-template-json</artifactId>-->
+<!--			<version>2.25.1</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter</artifactId>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.springframework.boot</groupId>-->
+<!--					<artifactId>spring-boot-starter-logging</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
+		<!-- Зависимости для логов -->
+
+		<!-- Spring JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- Spring JPA -->
+
+		<!-- Зависимость для PostgreSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.7.4</version>
+		</dependency>
+
+		<!-- Для сериализации -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.18.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.18.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.18.2</version>
+		</dependency>
+		<!-- Для сериализации -->
+
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
