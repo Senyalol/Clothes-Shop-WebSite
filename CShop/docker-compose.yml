@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: shopDB
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: clotheDB
+    ports:
+      - "5431:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

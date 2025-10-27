@@ -2,7 +2,7 @@ spring:
   application:
     name: CShop
   datasource:
-    url: jdbc:postgresql://localhost:5432/CShop
+    url: jdbc:postgresql://localhost:5431/clotheDB
     username: postgres
     password: 1111
     driver-class-name: org.postgresql.Driver
