@@ -1,9 +1,9 @@
 package com.ClotheShop.CShop.Service.Checks.CreateChecks;
 
 import com.ClotheShop.CShop.Entity.Product;
-//import com.ClotheShop.CShop.Service.Checks.ProductSex;
 
 public class ProductSexCreateCheck implements ProductCreateCheck {
+
     @Override
     public boolean check(Product p) {
 
@@ -17,4 +17,5 @@ public class ProductSexCreateCheck implements ProductCreateCheck {
         return result;
 
     }
+
 }
