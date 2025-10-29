@@ -21,9 +21,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-#logging:
-#  level:
-#    root: INFO
-
+logging:
+  level:
+    root: INFO
 
 # secretKey - yrF%B$~#IO
