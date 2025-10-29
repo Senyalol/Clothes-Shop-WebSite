@@ -1,7 +1,7 @@
 package com.ClotheShop.CShop.Controller;
 
 import com.ClotheShop.CShop.DTO.ProductDTO;
-import com.ClotheShop.CShop.Facade.ProductFacade;
+import com.ClotheShop.CShop.Facade.Product.ProductFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
