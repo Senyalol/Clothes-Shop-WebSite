@@ -5,6 +5,8 @@ import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Service.Product.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.Product.Checks.UpdateChecks.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private static Logger LOGGER = LogManager.getLogger(ProductServiceImpl.class);
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
@@ -39,11 +42,13 @@ public class ProductServiceImpl implements ProductService {
                 new ProductCategoryCreateCheck(),
                 new ProductTypeCreateCheck()
         ));
+
         MainProductCreateCheck checks = new MainProductCreateCheck(createChecks);
 
         if(checks.AllChecks(product)){
 
         productRepository.save(product);
+        LOGGER.info("Product: {} - successfully saved", product.getName());
             return product;
         }
 
@@ -82,6 +87,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product oldProduct = productRepository.findById(id).get();
         checks.allChecks(product, oldProduct);
+        LOGGER.info("Product data : - was successfully updated");
 
         return productRepository.findById(id).get();
     }
@@ -89,6 +95,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void deleteProduct(int id) {
+        LOGGER.info("Product: {} - was successfully deleted", productRepository.findById(id).get().getName());
         productRepository.deleteById(id);
     }
 
