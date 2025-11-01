@@ -8,6 +8,8 @@ import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService {
             }
 
             userRepository.save(user);
-
+            LOGGER.info("User : {} successfully added", user.getLogin());
             return user;
         }
 
@@ -71,7 +73,7 @@ public class UserServiceImpl implements UserService {
     public User updateUserById(int id, User user) {
 
         User certainUser = userRepository.findById(id).get();
-
+        String oldLogin = certainUser.getLogin();
         List<UserUpdateCheck> updateChecks = Arrays.asList(
                 new UserLoginUpdateCheck(userRepository),
                 new UserPasswordUpdateCheck(),
@@ -86,7 +88,7 @@ public class UserServiceImpl implements UserService {
         try{
 
             userUpdateCheck.applyChecks(certainUser, user);
-
+            LOGGER.info("User : {} successfully updated", oldLogin);
         }
         catch(Exception e){
             throw new RuntimeException();
@@ -99,7 +101,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void deleteUserById(int id) {
+        String certainLogin = userRepository.findById(id).get().getLogin();
         userRepository.deleteById(id);
+        LOGGER.info("User: {} successfully deleted",certainLogin);
     }
 
 }
