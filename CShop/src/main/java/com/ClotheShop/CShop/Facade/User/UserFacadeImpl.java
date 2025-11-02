@@ -2,6 +2,8 @@ package com.ClotheShop.CShop.Facade.User;
 
 import com.ClotheShop.CShop.DTO.UserDTO;
 import com.ClotheShop.CShop.Mapper.UserMapper;
+import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
+import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
 import com.ClotheShop.CShop.Service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,5 +48,10 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void deleteUserById(int id) {
         userService.deleteUserById(id);
+    }
+
+    @Override
+    public JwtAuthenticationDTO signIn(UserCredentialDTO userCredentialDTO) {
+        return userService.signIn(userCredentialDTO);
     }
 }

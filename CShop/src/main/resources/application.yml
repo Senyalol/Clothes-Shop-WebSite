@@ -25,4 +25,7 @@ logging:
   level:
     root: INFO
 
+app:
+  signature_key: ErwbRrF9T4vgdzPAAye6MwTHWiTmJ4Kn21KDIb0SnSjjA5HV9APgilI9CGMGyQQk
+
 # secretKey - yrF%B$~#IO

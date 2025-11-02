@@ -2,10 +2,14 @@ package com.ClotheShop.CShop.Service.User;
 
 import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Repository.UserRepository;
+import com.ClotheShop.CShop.Security.JWTService;
+import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
+import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
 import com.ClotheShop.CShop.Service.User.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UpdateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.logging.log4j.LogManager;
@@ -18,11 +22,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,JWTService jwtService,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -46,10 +54,13 @@ public class UserServiceImpl implements UserService {
             if(user.getSecretKey() != null && user.getSecretKey().equals("yrF%B$~#IO")){
                user.setRole(UserRoles.ADMIN.name());
             }
+
             else{
                 user.setRole(UserRoles.USER.name());
             }
 
+            user.setSecretKey(passwordEncoder.encode(user.getSecretKey()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             LOGGER.info("User : {} successfully added", user.getLogin());
             return user;
@@ -76,7 +87,7 @@ public class UserServiceImpl implements UserService {
         String oldLogin = certainUser.getLogin();
         List<UserUpdateCheck> updateChecks = Arrays.asList(
                 new UserLoginUpdateCheck(userRepository),
-                new UserPasswordUpdateCheck(),
+                new UserPasswordUpdateCheck(passwordEncoder),
                 new UserFirstNameUpdateCheck(),
                 new UserLastNameUpdateCheck(),
                 new UserBalanceUpdateCheck(),
@@ -104,6 +115,35 @@ public class UserServiceImpl implements UserService {
         String certainLogin = userRepository.findById(id).get().getLogin();
         userRepository.deleteById(id);
         LOGGER.info("User: {} successfully deleted",certainLogin);
+    }
+
+    @Override
+    public JwtAuthenticationDTO signIn(UserCredentialDTO userCredentialDTO){
+
+        User certainUser = userRepository.findByLogin(userCredentialDTO.getLogin()).get();
+        JwtAuthenticationDTO authenticationDTO = new JwtAuthenticationDTO();
+        authenticationDTO.setToken("Error authentication");
+        authenticationDTO.setRefreshToken("Error refresh token");
+
+        if(userCredentialDTO.getLogin() != null && userCredentialDTO.getPassword() != null && userRepository.findByLogin(userCredentialDTO.getLogin()).isPresent()){
+
+            if(passwordEncoder.matches(userCredentialDTO.getPassword(),certainUser.getPassword())){
+
+                LOGGER.info("{} User {} successfully authenticated",certainUser.getId(),certainUser.getLogin());
+                return jwtService.getTokenForUser(userCredentialDTO.getLogin());
+            }
+
+            else{
+                LOGGER.error("Incorrect login or password");
+            }
+
+        }
+
+        else{
+            LOGGER.error("User with login - {} not found",userCredentialDTO.getLogin());
+        }
+
+        return authenticationDTO;
     }
 
 }
