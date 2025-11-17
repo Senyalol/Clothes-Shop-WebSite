@@ -33,11 +33,10 @@ public class UserController {
         return userFacade.getUserById(id);
     }
 
-    @PostMapping
+    @PostMapping("/reg")
     public UserDTO addUser(@RequestBody UserDTO userDTO) {
         return userFacade.addUser(userDTO);
     }
-
 
     @PostMapping("/auth")
     public JwtAuthenticationDTO signIn(@RequestBody UserCredentialDTO userCredentialDTO){

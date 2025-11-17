@@ -60,27 +60,27 @@ public class JWTServiceImpl implements JWTService {
         }
 
         catch (ExpiredJwtException e){
-            LOGGER.info("Token expired - {}",e.getMessage());
+            LOGGER.warn("Token expired - {}",e.getMessage());
             System.out.println(e.getMessage());
             return false;
         }
         catch (UnsupportedJwtException e){
-            LOGGER.info("Token unsupported - {}",e.getMessage());
+            LOGGER.warn("Token unsupported - {}",e.getMessage());
             System.out.println(e.getMessage());
             return false;
         }
         catch (MalformedJwtException e){
-            LOGGER.info("Token malformed - {}",e.getMessage());
+            LOGGER.warn("Token malformed - {}",e.getMessage());
             System.out.println(e.getMessage());
             return false;
         }
         catch (SecurityException e){
-            LOGGER.info("Security exception - {}",e.getMessage());
+            LOGGER.warn("Security exception - {}",e.getMessage());
             System.out.println(e.getMessage());
             return false;
         }
         catch(Exception e){
-            LOGGER.info("Exception - {}",e.getMessage());
+            LOGGER.warn("Exception - {}",e.getMessage());
             System.out.println(e.getMessage());
             return false;
         }
