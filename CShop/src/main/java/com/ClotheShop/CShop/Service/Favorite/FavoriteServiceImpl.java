@@ -108,5 +108,6 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public void deleteFavoriteById(int id) {
         favoriteRepository.deleteById(id);
+        LOGGER.info("Favorite with id - {} , was deleted");
     }
 }
