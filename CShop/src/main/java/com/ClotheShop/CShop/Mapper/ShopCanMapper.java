@@ -38,6 +38,7 @@ public class ShopCanMapper {
 
         ShopCanDTO shopCanDTO = new ShopCanDTO();
 
+        shopCanDTO.setShopID(shopCan.getId());
         shopCanDTO.setUser_id(shopCan.getUser().getId());
         shopCanDTO.setProduct(shopCan.getProduct().getId());
         shopCanDTO.setCost(shopCan.getCost());

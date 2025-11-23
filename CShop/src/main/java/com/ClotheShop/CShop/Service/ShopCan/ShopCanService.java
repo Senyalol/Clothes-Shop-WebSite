@@ -14,7 +14,7 @@ public interface ShopCanService {
 
     ShopCan addToShopCan(ShopCan shopCan);
 
-    ShopCan updateShopCan(ShopCan shopCan);
+    ShopCan updateShopCan(int id, ShopCan shopCan);
 
     void deleteShopCan(int id);
 

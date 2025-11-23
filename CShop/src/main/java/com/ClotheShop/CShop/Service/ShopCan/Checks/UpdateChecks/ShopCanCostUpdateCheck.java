@@ -11,7 +11,7 @@ public class ShopCanCostUpdateCheck implements ShopCanUpdateCheck{
     @Override
     public void check(ShopCan oldShop, ShopCan newShop) {
 
-        if(newShop != null && newShop.getCost() != null && newShop.getCost() < 0){
+        if(newShop != null && newShop.getCost() != null && newShop.getCost() >= 0){
 
             Double oldCost = oldShop.getCost();
             oldShop.setCost(newShop.getCost());
