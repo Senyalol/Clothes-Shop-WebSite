@@ -9,6 +9,7 @@ import com.ClotheShop.CShop.Service.User.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UpdateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+
+    @Value("${app.secretKey}")
+    private String secretKey;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,JWTService jwtService,PasswordEncoder passwordEncoder) {
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
             user.setBalance(0.0);
 
-            if(user.getSecretKey() != null && user.getSecretKey().equals("yrF%B$~#IO")){
+            if(user.getSecretKey() != null && user.getSecretKey().equals(secretKey)){
                user.setRole(UserRoles.ADMIN.name());
             }
 
