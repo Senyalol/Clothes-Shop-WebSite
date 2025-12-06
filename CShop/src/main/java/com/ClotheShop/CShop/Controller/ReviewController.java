@@ -7,6 +7,7 @@ import com.ClotheShop.CShop.Facade.Review.ReviewFacade;
 
 import java.util.List;
 
+@CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
 @RequestMapping("api/reviews")
 public class ReviewController {
