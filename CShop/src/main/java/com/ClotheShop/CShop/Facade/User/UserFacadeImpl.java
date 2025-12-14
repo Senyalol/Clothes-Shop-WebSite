@@ -4,6 +4,9 @@ import com.ClotheShop.CShop.DTO.UserDTO;
 import com.ClotheShop.CShop.Mapper.UserMapper;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
 import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.Service.User.UserInterface;
+import com.ClotheShop.CShop.Service.User.UserInterfaceImpl;
 import com.ClotheShop.CShop.Service.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,11 +19,15 @@ public class UserFacadeImpl implements UserFacade {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final UserInterface userInterface;
+    private final UserInterfaceImpl userInterfaceImpl;
 
     @Autowired
-    public UserFacadeImpl(UserService userService, UserMapper userMapper) {
+    public UserFacadeImpl(UserService userService, UserMapper userMapper, UserInterface userInterface, UserInterfaceImpl userInterfaceImpl) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.userInterface = userInterface;
+        this.userInterfaceImpl = userInterfaceImpl;
     }
 
     @Override
@@ -53,5 +60,43 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public JwtAuthenticationDTO signIn(UserCredentialDTO userCredentialDTO) {
         return userService.signIn(userCredentialDTO);
+    }
+
+    @Override
+    public UserDTO changeUserYourSelf(String token, VerifyChangeDTO dto) {
+
+        String bearerToken = token;
+
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            bearerToken = bearerToken.substring(7).trim();
+        }
+
+        if(userInterface.comparePasswords(bearerToken,dto.getOldPassword())){
+
+            return userMapper.toDTO(userService.changeUserYourSelf(bearerToken,dto));
+
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteUserYourSelf(String token) {
+        String bearerToken = token;
+
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            bearerToken = bearerToken.substring(7).trim();
+        }
+        userService.deleteUserYourSelf(bearerToken);
+    }
+
+    @Override
+    public UserDTO getYourSelf(String token) {
+        String bearerToken = token;
+
+        if(bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            bearerToken = bearerToken.substring(7).trim();
+        }
+
+        return userMapper.toDTO(userService.getYourSelf(bearerToken));
     }
 }

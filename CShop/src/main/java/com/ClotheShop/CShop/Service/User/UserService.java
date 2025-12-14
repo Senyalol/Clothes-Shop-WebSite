@@ -1,9 +1,11 @@
 package com.ClotheShop.CShop.Service.User;
 
 import java.util.List;
+
 import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
 import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
 
 public interface UserService {
 
@@ -18,5 +20,12 @@ public interface UserService {
     void deleteUserById(int id);
 
     JwtAuthenticationDTO signIn(UserCredentialDTO userCredentialDTO);
+
+    User changeUserYourSelf(String token, VerifyChangeDTO verifyChangeDTO);
+
+    void deleteUserYourSelf(String token);
+
+    User getYourSelf(String token);
+
 
 }

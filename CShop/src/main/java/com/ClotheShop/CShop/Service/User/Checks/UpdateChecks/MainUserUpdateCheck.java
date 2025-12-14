@@ -1,6 +1,7 @@
 package com.ClotheShop.CShop.Service.User.Checks.UpdateChecks;
 
 import com.ClotheShop.CShop.Entity.User;
+import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ public class MainUserUpdateCheck {
 
         for(UserUpdateCheck check : updateChecks){
             check.upCheck(certainUser, newData);
+        }
+
+    }
+
+    public void applyUserChecks(User certainUser, VerifyChangeDTO user){
+
+        for(UserUpdateCheck check : updateChecks){
+            check.upUserCheck(certainUser, user);
         }
 
     }

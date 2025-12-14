@@ -4,7 +4,9 @@ import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Repository.UserRepository;
 import com.ClotheShop.CShop.Security.JWTService;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
+import com.ClotheShop.CShop.Security.SDTO.JwtTokenDTO;
 import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
 import com.ClotheShop.CShop.Service.User.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UpdateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
@@ -106,6 +108,7 @@ public class UserServiceImpl implements UserService {
             LOGGER.info("User : {} successfully updated", oldLogin);
         }
         catch(Exception e){
+            LOGGER.error(e.getMessage());
             throw new RuntimeException();
         }
 
@@ -148,6 +151,64 @@ public class UserServiceImpl implements UserService {
         }
 
         return authenticationDTO;
+    }
+
+    //Достать пользователя по его JWT
+    public User userFromToken(String token){
+
+        JwtTokenDTO yourToken = new JwtTokenDTO();
+        yourToken.setToken(token);
+        String yoursLogin = jwtService.parseTokenForLogin(yourToken).getLogin();
+        User you = userRepository.findByLogin(yoursLogin).get();
+
+        return you;
+    }
+
+    @Transactional
+    @Override
+    public User changeUserYourSelf(String token, VerifyChangeDTO user) {
+
+        User changedUser = userFromToken(token);
+
+        List<UserUpdateCheck> updateChecks = Arrays.asList(
+                new UserLoginUpdateCheck(userRepository),
+                new UserPasswordUpdateCheck(passwordEncoder),
+                new UserFirstNameUpdateCheck(),
+                new UserLastNameUpdateCheck(),
+                new UserBalanceUpdateCheck(),
+                new UserSecretKeyUpdateCheck()
+        );
+
+        MainUserUpdateCheck userUpdateCheck = new MainUserUpdateCheck(updateChecks);
+
+        try{
+
+            userUpdateCheck.applyUserChecks(changedUser, user);
+            LOGGER.info("User : {} successfully updated", changedUser.getLogin());
+            return changedUser;
+
+        }
+        catch(Exception e){
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException();
+        }
+
+    }
+
+    //Удалить свой аккаунт
+    @Transactional
+    @Override
+    public void deleteUserYourSelf(String token) {
+
+        int yourId = userFromToken(token).getId();
+        userRepository.deleteById(yourId);
+
+    }
+
+    //Получить пользователю самого себе
+    @Override
+    public User getYourSelf(String token) {
+        return userFromToken(token);
     }
 
 }

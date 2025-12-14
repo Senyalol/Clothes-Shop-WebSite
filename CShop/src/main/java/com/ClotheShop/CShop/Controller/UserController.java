@@ -4,11 +4,14 @@ import com.ClotheShop.CShop.DTO.UserDTO;
 import com.ClotheShop.CShop.Facade.User.UserFacade;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
 import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+//Сделать функционал для выхода из аккаунта
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
@@ -22,6 +25,8 @@ public class UserController {
         this.userFacade = userFacade;
     }
 
+    //Возможности админа
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<UserDTO> getAllUsers() {
@@ -34,15 +39,6 @@ public class UserController {
         return userFacade.getUserById(id);
     }
 
-    @PostMapping("/reg")
-    public UserDTO addUser(@RequestBody UserDTO userDTO) {
-        return userFacade.addUser(userDTO);
-    }
-
-    @PostMapping("/auth")
-    public JwtAuthenticationDTO signIn(@RequestBody UserCredentialDTO userCredentialDTO){
-        return userFacade.signIn(userCredentialDTO);
-    }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/delete/{id}")
@@ -54,6 +50,36 @@ public class UserController {
     @PatchMapping("/update/{id}")
     public UserDTO updateUser(@PathVariable int id, @RequestBody UserDTO userDTO) {
         return userFacade.updateUserById(id, userDTO);
+    }
+
+    //Пользовательский функционал
+
+    @PostMapping("/reg")
+    public UserDTO addUser(@RequestBody UserDTO userDTO) {
+        return userFacade.addUser(userDTO);
+    }
+
+    @PostMapping("/auth")
+    public JwtAuthenticationDTO signIn(@RequestBody UserCredentialDTO userCredentialDTO){
+        return userFacade.signIn(userCredentialDTO);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @GetMapping("/getYours")
+    public UserDTO getYourself(@RequestHeader("Authorization") String token) {
+        return userFacade.getYourSelf(token);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PatchMapping("/updateYours")
+    public UserDTO updateYourself(@RequestHeader("Authorization") String token ,@RequestBody VerifyChangeDTO dto) {
+        return userFacade.changeUserYourSelf(token,dto);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @DeleteMapping("/deleteYours")
+    public void deleteYourself(@RequestHeader("Authorization") String token) {
+        userFacade.deleteUserYourSelf(token);
     }
 
 }

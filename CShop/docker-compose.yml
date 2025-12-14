@@ -11,20 +11,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  shop:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      POSTGRES_USERNAME: postgres
-      POSTGRES_PASSWORD: 1111
-      POSTGRES_DB: clotheDB
-      POSTGRES_PORT: 5432
-      POSTGRES_HOST: postgres
-      ADMIN_KEY: yrF%B$~#IO
-      SIGNATURE_KEY: ErwbRrF9T4vgdzPAAye6MwTHWiTmJ4Kn21KDIb0SnSjjA5HV9APgilI9CGMGyQQk
-    depends_on:
-      - postgres
+#  shop:
+#    build: .
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      POSTGRES_USERNAME: postgres
+#      POSTGRES_PASSWORD: 1111
+#      POSTGRES_DB: clotheDB
+#      POSTGRES_PORT: 5432
+#      POSTGRES_HOST: postgres
+#      ADMIN_KEY: yrF%B$~#IO
+#      SIGNATURE_KEY: ErwbRrF9T4vgdzPAAye6MwTHWiTmJ4Kn21KDIb0SnSjjA5HV9APgilI9CGMGyQQk
+#    depends_on:
+#      - postgres
 
 
 volumes:
