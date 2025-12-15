@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
-import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.Security.SDTO.JwtTokenDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 
 public interface UserService {
 
@@ -27,5 +28,8 @@ public interface UserService {
 
     User getYourSelf(String token);
 
+    JwtTokenDTO getOut(String token);
+
+    User deposit(String token, Double depositSum);
 
 }

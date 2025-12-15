@@ -87,13 +87,14 @@ public class JWTServiceImpl implements JWTService {
     }
 
     //Метод для генерации JWT токена
-    public String generateJwtToken(String login, String role) {
+    public String generateJwtToken(String login, String role, String password) {
 
         Date lifeTimeToken = Date.from(LocalDateTime.now().plusHours(11).atZone(ZoneId.systemDefault()).toInstant());
 
         return  Jwts.builder()
                 .setSubject(login)
                 .claim("role",role)
+                .claim("password",password)
                 .setExpiration(lifeTimeToken)
                 .signWith(getSignInKey())
                 .compact();
@@ -103,10 +104,11 @@ public class JWTServiceImpl implements JWTService {
     //Метод при прохождении аутентификации которого - пользователь получает токен
     public JwtAuthenticationDTO getTokenForUser(String login){
 
+        String password = userRepository.findByLogin(login).get().getPassword();
         String role = getRoleUser(login);
         JwtAuthenticationDTO jwt = new JwtAuthenticationDTO();
-        jwt.setToken(generateJwtToken(login, role));
-        jwt.setRefreshToken(generateJwtToken(login, role));
+        jwt.setToken(generateJwtToken(login, role, password));
+        jwt.setRefreshToken(generateJwtToken(login, role, password));
 
         return jwt;
 
@@ -117,7 +119,8 @@ public class JWTServiceImpl implements JWTService {
 
         JwtAuthenticationDTO jwt = new JwtAuthenticationDTO();
         String role = getRoleUser(login);
-        jwt.setToken(generateJwtToken(login, role));
+        String password = userRepository.findByLogin(login).get().getPassword();
+        jwt.setToken(generateJwtToken(login, role, password));
         jwt.setRefreshToken(refreshToken);
 
         return jwt;
@@ -137,4 +140,23 @@ public class JWTServiceImpl implements JWTService {
         loginL.setLogin(login.getSubject());
         return loginL;
     }
+
+    //Метод для выхода из аккаунта
+    @Override
+    public String getOutFromAccount(String login, String role){
+
+        Date lifeTimeToken = Date.from(LocalDateTime.now().plusSeconds(0).atZone(ZoneId.systemDefault()).toInstant());
+
+
+        String deadJwt = Jwts.builder()
+                .setSubject(login)
+                .claim("role",role)
+                .setExpiration(lifeTimeToken)
+                .signWith(getSignInKey())
+                .compact();
+
+        return deadJwt;
+
+    }
+
 }

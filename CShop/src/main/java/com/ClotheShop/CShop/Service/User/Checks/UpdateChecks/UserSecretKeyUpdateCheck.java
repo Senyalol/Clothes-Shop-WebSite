@@ -1,18 +1,19 @@
 package com.ClotheShop.CShop.Service.User.Checks.UpdateChecks;
 
 import com.ClotheShop.CShop.Entity.User;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 
 public class UserSecretKeyUpdateCheck implements UserUpdateCheck{
 
     private static final Logger LOGGER = LogManager.getLogger(UserSecretKeyUpdateCheck.class);
-
-    @Value("${app.secretKey}")
     private String secret;
+
+    public UserSecretKeyUpdateCheck(String secret) {
+        this.secret = secret;
+    }
 
     @Override
     public void upCheck(User certainUser, User newData) {

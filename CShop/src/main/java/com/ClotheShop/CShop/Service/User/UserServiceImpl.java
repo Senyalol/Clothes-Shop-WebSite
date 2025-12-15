@@ -5,8 +5,8 @@ import com.ClotheShop.CShop.Repository.UserRepository;
 import com.ClotheShop.CShop.Security.JWTService;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
 import com.ClotheShop.CShop.Security.SDTO.JwtTokenDTO;
-import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 import com.ClotheShop.CShop.Service.User.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UpdateChecks.*;
 import com.ClotheShop.CShop.Service.User.Checks.UserRoles;
@@ -92,12 +92,12 @@ public class UserServiceImpl implements UserService {
         User certainUser = userRepository.findById(id).get();
         String oldLogin = certainUser.getLogin();
         List<UserUpdateCheck> updateChecks = Arrays.asList(
-                new UserLoginUpdateCheck(userRepository),
-                new UserPasswordUpdateCheck(passwordEncoder),
+//                new UserLoginUpdateCheck(userRepository),
+//                new UserPasswordUpdateCheck(passwordEncoder),
                 new UserFirstNameUpdateCheck(),
                 new UserLastNameUpdateCheck(),
                 new UserBalanceUpdateCheck(),
-                new UserSecretKeyUpdateCheck()
+                new UserSecretKeyUpdateCheck(secretKey)
         );
 
         MainUserUpdateCheck userUpdateCheck = new MainUserUpdateCheck(updateChecks);
@@ -175,8 +175,7 @@ public class UserServiceImpl implements UserService {
                 new UserPasswordUpdateCheck(passwordEncoder),
                 new UserFirstNameUpdateCheck(),
                 new UserLastNameUpdateCheck(),
-                new UserBalanceUpdateCheck(),
-                new UserSecretKeyUpdateCheck()
+                new UserSecretKeyUpdateCheck(secretKey)
         );
 
         MainUserUpdateCheck userUpdateCheck = new MainUserUpdateCheck(updateChecks);
@@ -202,13 +201,57 @@ public class UserServiceImpl implements UserService {
 
         int yourId = userFromToken(token).getId();
         userRepository.deleteById(yourId);
-
+        LOGGER.info("User : {} successfully deleted",yourId);
     }
 
     //Получить пользователю самого себе
     @Override
     public User getYourSelf(String token) {
         return userFromToken(token);
+    }
+
+    @Override
+    public JwtTokenDTO getOut(String token) {
+
+        try{
+
+            User exitUser = userRepository.findByLogin(jwtService.getLoginFromToken(token)).get();
+
+            String login = exitUser.getLogin();
+            String role = exitUser.getRole();
+
+            String deadToken = jwtService.getOutFromAccount(login, role);
+            JwtTokenDTO deadTokenDTO = new JwtTokenDTO();
+            deadTokenDTO.setToken(deadToken);
+            return deadTokenDTO;
+
+        }
+        catch (Exception e){
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException();
+        }
+
+    }
+
+    //Пополнить баланс
+    @Transactional
+    @Override
+    public User deposit(String token, Double depositSum) {
+
+        try{
+
+            User user = userRepository.findByLogin(jwtService.getLoginFromToken(token)).get();
+
+            Double resultSum = user.getBalance() + depositSum;
+            user.setBalance(resultSum);
+            LOGGER.info("User : {} successfully deposited, balance - {}", user.getLogin(),user.getBalance());
+            return user;
+        }
+        catch (Exception e){
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException();
+        }
+
     }
 
 }

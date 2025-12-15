@@ -1,10 +1,12 @@
 package com.ClotheShop.CShop.Controller;
 
-import com.ClotheShop.CShop.DTO.UserDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserDepositDTO;
 import com.ClotheShop.CShop.Facade.User.UserFacade;
 import com.ClotheShop.CShop.Security.SDTO.JwtAuthenticationDTO;
-import com.ClotheShop.CShop.Security.SDTO.UserCredentialDTO;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.Security.SDTO.JwtTokenDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserCredentialDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -80,6 +82,20 @@ public class UserController {
     @DeleteMapping("/deleteYours")
     public void deleteYourself(@RequestHeader("Authorization") String token) {
         userFacade.deleteUserYourSelf(token);
+    }
+
+    //Место для метода пополнения баланса
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PatchMapping("/deposit")
+    public UserDTO depositUser(@RequestHeader("Authorization") String token, @RequestBody UserDepositDTO userDepositDTO) {
+        return userFacade.deposit(token,userDepositDTO);
+    }
+
+    //Модернизировать , токен нужно убивать
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @GetMapping("/exit")
+    public JwtTokenDTO exit(@RequestHeader("Authorization") String token){
+        return userFacade.getOut(token);
     }
 
 }

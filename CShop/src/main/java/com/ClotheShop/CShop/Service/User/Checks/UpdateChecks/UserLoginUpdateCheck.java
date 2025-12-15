@@ -2,7 +2,7 @@ package com.ClotheShop.CShop.Service.User.Checks.UpdateChecks;
 
 import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Repository.UserRepository;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

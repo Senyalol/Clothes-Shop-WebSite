@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.UserDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.UserDTO;
 import com.ClotheShop.CShop.Entity.User;
 import org.springframework.stereotype.Component;
 

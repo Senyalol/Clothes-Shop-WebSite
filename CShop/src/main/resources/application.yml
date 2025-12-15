@@ -2,9 +2,9 @@ spring:
   application:
     name: CShop
   datasource:
-    url: jdbc:postgresql://localhost:5431/clotheDB
-    username: postgres
-    password: 1111
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   flyway:
@@ -26,8 +26,8 @@ logging:
     root: INFO
 
 app:
-  signature_key: ErwbRrF9T4vgdzPAAye6MwTHWiTmJ4Kn21KDIb0SnSjjA5HV9APgilI9CGMGyQQk
-  secretKey: yrF%B$~#IO
+  signature_key: ${SIGNATURE_KEY}
+  secretKey: ${ADMIN_KEY}
 
 server:
   port: 8080
@@ -36,9 +36,9 @@ server:
 #  application:
 #    name: CShop
 #  datasource:
-#    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-#    username: ${POSTGRES_USERNAME}
-#    password: ${POSTGRES_PASSWORD}
+#    url: jdbc:postgresql://localhost:5431/clotheDB
+#    username: postgres
+#    password: 1111
 #    driver-class-name: org.postgresql.Driver
 #
 #  flyway:
@@ -60,8 +60,8 @@ server:
 #    root: INFO
 #
 #app:
-#  signature_key: ${SIGNATURE_KEY}
-#  secretKey: ${ADMIN_KEY}
+#  signature_key: ErwbRrF9T4vgdzPAAye6MwTHWiTmJ4Kn21KDIb0SnSjjA5HV9APgilI9CGMGyQQk
+#  secretKey: yrF%B$~#IO
 #
 #server:
 #  port: 8080

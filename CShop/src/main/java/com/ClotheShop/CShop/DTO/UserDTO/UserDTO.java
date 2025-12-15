@@ -1,10 +1,13 @@
-package com.ClotheShop.CShop.Security.SDTO;
+package com.ClotheShop.CShop.DTO.UserDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class VerifyChangeDTO {
+public class UserDTO {
+
+    @JsonProperty("user_id")
+    private Integer user_id;
 
     @JsonProperty("login")
     private String login;
@@ -24,7 +27,7 @@ public class VerifyChangeDTO {
     @JsonProperty("secretKey")
     private String secretKey;
 
-    @JsonProperty("oldPassword")
-    private String oldPassword;
+    @JsonProperty("role")
+    private String role;
 
 }

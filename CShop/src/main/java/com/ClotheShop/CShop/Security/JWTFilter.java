@@ -38,7 +38,7 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     //Метод устанавливает пользователя токен с данными в контекст безопасности
-    private void setuserDetailsToSecurityContextHolder(String jwtToken){
+    public void setuserDetailsToSecurityContextHolder(String jwtToken){
         String login = jwtService.getLoginFromToken(jwtToken);
         CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(login);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());

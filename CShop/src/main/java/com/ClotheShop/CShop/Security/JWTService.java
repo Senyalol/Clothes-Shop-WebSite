@@ -8,7 +8,7 @@ public interface JWTService {
 
     boolean validateJwtToken(String token);
 
-    String generateJwtToken(String login, String role);
+    String generateJwtToken(String login, String role, String password);
 
     JwtAuthenticationDTO getTokenForUser(String login);
 
@@ -17,5 +17,7 @@ public interface JWTService {
     String getLoginFromToken(String token);
 
     LoginFromTokenDTO parseTokenForLogin(JwtTokenDTO token);
+
+    String getOutFromAccount(String login, String role);
 
 }

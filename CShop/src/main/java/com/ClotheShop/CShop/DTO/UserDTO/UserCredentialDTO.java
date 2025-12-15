@@ -1,4 +1,4 @@
-package com.ClotheShop.CShop.Security.SDTO;
+package com.ClotheShop.CShop.DTO.UserDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

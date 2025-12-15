@@ -1,7 +1,7 @@
 package com.ClotheShop.CShop.Service.User.Checks.UpdateChecks;
 
 import com.ClotheShop.CShop.Entity.User;
-import com.ClotheShop.CShop.Security.SDTO.VerifyChangeDTO;
+import com.ClotheShop.CShop.DTO.UserDTO.VerifyChangeDTO;
 
 import java.util.List;
 
