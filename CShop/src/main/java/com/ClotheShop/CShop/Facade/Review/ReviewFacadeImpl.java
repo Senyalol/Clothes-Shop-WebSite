@@ -30,8 +30,9 @@ public class ReviewFacadeImpl implements ReviewFacade {
     }
 
     @Override
-    public ReviewDTO addReview(ReviewDTO reviewDTO) {
-        return reviewMapper.toDTO(reviewService.addReview(reviewMapper.toEntity(reviewDTO)));
+    public ReviewDTO addReview(String token ,ReviewDTO reviewDTO) {
+
+        return reviewMapper.toDTO(reviewService.addReview(reviewMapper.toEntityWithUser(token,reviewDTO)));
     }
 
     @Override
@@ -48,4 +49,16 @@ public class ReviewFacadeImpl implements ReviewFacade {
     public ReviewDTO getReviewById(int id) {
         return reviewMapper.toDTO(reviewService.getReviewById(id));
     }
+
+    @Override
+    public ReviewDTO changeYouReview(int id, ReviewDTO reviewDTO,String token) {
+        return reviewMapper.toDTO(reviewService.changeYouReview(id, reviewMapper.toEntityWithUser(token,reviewDTO)));
+    }
+
+    @Override
+    public void deleteYouReview(int id, ReviewDTO reviewDTO ,String token) {
+        reviewService.deleteYouReview(id,reviewMapper.toEntityWithUser(token,reviewDTO));
+    }
+
+
 }

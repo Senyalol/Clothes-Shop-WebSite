@@ -1,9 +1,11 @@
 package com.ClotheShop.CShop.Service.Review;
 
 import com.ClotheShop.CShop.Entity.Review;
+import com.ClotheShop.CShop.Entity.User;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.ReviewRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;
+import com.ClotheShop.CShop.Security.JWTService;
 import com.ClotheShop.CShop.Service.Review.Checks.CreateChecks.*;
 import com.ClotheShop.CShop.Service.Review.Checks.UpdateChecks.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -43,9 +45,10 @@ public class ReviewServiceImpl implements ReviewService{
     @Transactional
     public Review addReview(Review review) {
 
+        //User you = userRepository.findByLogin(jwtService.getLoginFromToken(token)).get();
+
         List<ReviewCreateCheck> checks = new ArrayList<>(Arrays.asList(
                 new ReviewProductIdCreateCheck(productRepository),
-                new ReviewUserIdCreateCheck(userRepository),
                 new ReviewRevCreateCheck()
         ));
 
@@ -53,6 +56,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         if(createCheck.fullCreateCheck(review)){
 
+           // review.setUser(you);
             reviewRepository.save(review);
             LOGGER.info("Review with user - {} and product - {} - successfully added",review.getUser().getId(),review.getProduct().getId());
 
@@ -102,5 +106,48 @@ public class ReviewServiceImpl implements ReviewService{
     public Review getReviewById(int id) {
         return reviewRepository.findById(id);
     }
+
+    @Transactional
+    @Override
+    public Review changeYouReview(int id, Review review) {
+
+        Review certainReview = reviewRepository.findById(id);
+
+        if(certainReview.getUser().getId() == review.getUser().getId()){
+
+            List<ReviewUpdateCheck> updateChecks = new ArrayList<>(Arrays.asList(
+                    new ReviewRevUpdateCheck()
+            ));
+
+            MainReviewUpdateCheck updateCheck = new MainReviewUpdateCheck(updateChecks);
+
+            try{
+                updateCheck.updateChecks(certainReview, review);
+                LOGGER.info("{} - review was successfully updated",id);
+                return reviewRepository.findById(id);
+            }
+            catch (Exception e){
+                LOGGER.warn("{} - review was not updated",id);
+                LOGGER.error(e.getMessage());
+                throw new RuntimeException();
+            }
+
+        }
+
+        return reviewRepository.findById(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteYouReview(int id, Review review) {
+
+        Review certainReview = reviewRepository.findById(id);
+        if(certainReview.getUser().getId() == review.getUser().getId()){
+            reviewRepository.deleteById(id);
+            LOGGER.info("{} - review was successfully deleted",id);
+        }
+
+    }
+
 
 }
