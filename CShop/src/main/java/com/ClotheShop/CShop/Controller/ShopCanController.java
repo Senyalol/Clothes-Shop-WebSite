@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Добавить метод покупки и оплаты товаров в корзине
+//Добавить корзину пользователя
+
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
 @RequestMapping("/api/cans")

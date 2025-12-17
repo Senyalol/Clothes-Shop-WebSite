@@ -48,4 +48,20 @@ public class ProductFacadeImpl implements ProductFacade {
         productService.deleteProduct(id);
     }
 
+    @Override
+    public List<ProductDTO> filterProduct(ProductDTO product) {
+        return productService.filterProduct(productMapper.toEntity(product))
+                .stream()
+                .map(x -> productMapper.toDTO(x))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> findByName(String name) {
+        return productService.findByName(name)
+                .stream()
+                .map(x -> productMapper.toDTO(x))
+                .collect(Collectors.toList());
+    }
+
 }

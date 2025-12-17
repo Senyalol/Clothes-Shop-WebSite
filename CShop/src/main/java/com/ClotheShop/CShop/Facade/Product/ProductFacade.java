@@ -16,4 +16,8 @@ public interface ProductFacade {
 
     void deleteProduct(int id);
 
+    List<ProductDTO> filterProduct(ProductDTO product);
+
+    List<ProductDTO> findByName(String name);
+
 }

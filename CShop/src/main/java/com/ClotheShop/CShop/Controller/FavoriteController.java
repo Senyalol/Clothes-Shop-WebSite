@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 //Нужна хорошая доработка ролей
 
+//Мое избранное
+
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
 @RequestMapping("/api/favorites")

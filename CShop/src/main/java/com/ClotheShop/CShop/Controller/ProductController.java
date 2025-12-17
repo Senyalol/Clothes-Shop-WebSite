@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Добавить сортировки по критериям
+//Нужно отслеживать доступность товара
+
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
 @RequestMapping("/api/products")
@@ -46,6 +49,21 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public void deleteProduct(@PathVariable int id){
         productFacade.deleteProduct(id);
+    }
+
+    //Работает плохо
+    //Фильтрация по параметрам
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PostMapping("/filter")
+    public List<ProductDTO> filterProduct(@RequestBody ProductDTO product){
+        return productFacade.filterProduct(product);
+    }
+
+    //Поиск по имени
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @GetMapping("/find/{name}")
+    public List<ProductDTO> findProduct(@PathVariable String name){
+        return productFacade.findByName(name);
     }
 
 }

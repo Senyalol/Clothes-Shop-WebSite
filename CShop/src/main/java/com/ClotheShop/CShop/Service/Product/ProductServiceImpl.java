@@ -3,6 +3,7 @@ package com.ClotheShop.CShop.Service.Product;
 import com.ClotheShop.CShop.Entity.Product;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Service.Product.Checks.CreateChecks.*;
+import com.ClotheShop.CShop.Service.Product.Checks.Filters.*;
 import com.ClotheShop.CShop.Service.Product.Checks.UpdateChecks.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.logging.log4j.LogManager;
@@ -97,6 +98,37 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(int id) {
         LOGGER.info("Product: {} - was successfully deleted", productRepository.findById(id).get().getName());
         productRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public List<Product> filterProduct(Product product) {
+
+        try {
+
+            List<Filter> filters = new ArrayList<>(Arrays.asList(
+                    new FilterNameProd(),
+                    new FilterPriceProd(),
+                    new FilterSizeProd(),
+                    new FilterSexProd(),
+                    new FilterCategoryProd(),
+                    new FilterTypeProd()
+            ));
+
+            MainFilter result = new MainFilter(filters);
+
+            return result.getFilters(product,productRepository);
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public List<Product> findByName(String name) {
+        return productRepository.findByName(name);
     }
 
 }
