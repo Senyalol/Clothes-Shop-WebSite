@@ -22,8 +22,8 @@ public class FavoriteFacadeImpl implements FavoriteFacade {
     }
 
     @Override
-    public FavoriteDTO addFavorite(FavoriteDTO favoriteDTO) {
-        return favoriteMapper.toDTO(favoriteService.addFavorite(favoriteMapper.toEntity(favoriteDTO)));
+    public FavoriteDTO addFavorite(String token ,FavoriteDTO favoriteDTO) {
+        return favoriteMapper.toDTO(favoriteService.addFavorite(favoriteMapper.toEntityWithUser(token,favoriteDTO)));
     }
 
     @Override
@@ -47,6 +47,21 @@ public class FavoriteFacadeImpl implements FavoriteFacade {
     @Override
     public void deleteFavoriteById(int id) {
         favoriteService.deleteFavoriteById(id);
+    }
+
+    @Override
+    public List<FavoriteDTO> getFavoritesByToken(String token) {
+        return favoriteService.getAllFavoritesByUser(token)
+                .stream()
+                .map(x -> favoriteMapper.toDTO(x))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteFromFavorite(int id, String token, FavoriteDTO favoriteDTO) {
+
+        favoriteService.deleteFromFavorite(id,favoriteMapper.toEntityWithUser(token,favoriteDTO));
+
     }
 
 }

@@ -4,9 +4,9 @@ import com.ClotheShop.CShop.Entity.Favorite;
 import com.ClotheShop.CShop.Repository.FavoriteRepository;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;
+import com.ClotheShop.CShop.Security.JWTService;
 import com.ClotheShop.CShop.Service.Favorite.Checks.CreateChecks.FavoriteCreateCheck;
 import com.ClotheShop.CShop.Service.Favorite.Checks.CreateChecks.FavoriteProductIdCreateCheck;
-import com.ClotheShop.CShop.Service.Favorite.Checks.CreateChecks.FavoriteUserIdCreateCheck;
 import com.ClotheShop.CShop.Service.Favorite.Checks.CreateChecks.MainFavoriteCreateCheck;
 import com.ClotheShop.CShop.Service.Favorite.Checks.UpdateChecks.FavoriteProductIdUpdateCheck;
 import com.ClotheShop.CShop.Service.Favorite.Checks.UpdateChecks.FavoriteUpdateCheck;
@@ -32,11 +32,14 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    private final JWTService jwtService;
+
     @Autowired
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository,UserRepository UserRepository,ProductRepository productRepository) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository,UserRepository UserRepository,ProductRepository productRepository, JWTService jwtService) {
         this.favoriteRepository = favoriteRepository;
         this.userRepository = UserRepository;
         this.productRepository = productRepository;
+        this.jwtService = jwtService;
     }
 
     @Transactional
@@ -44,7 +47,6 @@ public class FavoriteServiceImpl implements FavoriteService {
     public Favorite addFavorite(Favorite favorite) {
 
         List<FavoriteCreateCheck> createChecks = new ArrayList<>(Arrays.asList(
-                new FavoriteUserIdCreateCheck(userRepository),
                 new FavoriteProductIdCreateCheck(productRepository)
         ));
 
@@ -108,6 +110,35 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     public void deleteFavoriteById(int id) {
         favoriteRepository.deleteById(id);
-        LOGGER.info("Favorite with id - {} , was deleted");
+        LOGGER.info("Favorite with id - {} , was deleted",id);
+    }
+
+    @Override
+    public List<Favorite> getAllFavoritesByUser(String token) {
+
+        String payLoadData = token;
+
+        if(payLoadData != null && payLoadData.startsWith("Bearer ")) {
+            payLoadData = payLoadData.substring(7).trim();
+        }
+
+        int yourUserId = userRepository.findByLogin(jwtService.getLoginFromToken(payLoadData)).get().getId();
+
+        return favoriteRepository.findAllByUserId(yourUserId);
+    }
+
+    @Transactional
+    @Override
+    public void deleteFromFavorite(int id, Favorite favorite) {
+
+
+        int yourUserId = favorite.getUser().getId();
+
+        if(favoriteRepository.findById(id).get().getUser().getId() == yourUserId){
+            favoriteRepository.deleteById(id);
+            LOGGER.info("Favorite with id - {} , was deleted",id);
+        }
+
+
     }
 }

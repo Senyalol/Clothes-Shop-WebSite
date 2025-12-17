@@ -9,10 +9,14 @@ public interface FavoriteFacade {
 
     FavoriteDTO getFavoriteById(int id);
 
-    FavoriteDTO addFavorite(FavoriteDTO favoriteDTO);
+    FavoriteDTO addFavorite(String token ,FavoriteDTO favoriteDTO);
 
     FavoriteDTO updateFavorite(int id,FavoriteDTO favoriteDTO);
 
     void deleteFavoriteById(int id);
+
+    List<FavoriteDTO> getFavoritesByToken(String token);
+
+    void deleteFromFavorite(int id, String token, FavoriteDTO favoriteDTO);
 
 }

@@ -16,4 +16,8 @@ public interface FavoriteService {
 
     void deleteFavoriteById(int id);
 
+    List<Favorite> getAllFavoritesByUser(String token);
+
+    void deleteFromFavorite(int id, Favorite favorite);
+
 }

@@ -4,6 +4,7 @@ import com.ClotheShop.CShop.DTO.FavoriteDTO;
 import com.ClotheShop.CShop.Entity.Favorite;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;
+import com.ClotheShop.CShop.Security.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +14,13 @@ public class FavoriteMapper {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    private final JWTService jwtService;
+
     @Autowired
-    public FavoriteMapper(UserRepository userRepository, ProductRepository productRepository) {
+    public FavoriteMapper(UserRepository userRepository, ProductRepository productRepository,JWTService jwtService) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.jwtService = jwtService;
     }
 
     //Из DTO в сущность
@@ -25,6 +29,22 @@ public class FavoriteMapper {
         Favorite favorite = new Favorite();
 
         favorite.setUser(userRepository.findById(favoriteDTO.getUserId()).get());
+        favorite.setProduct(productRepository.findById(favoriteDTO.getProductId()).get());
+
+        return favorite;
+    }
+
+    public Favorite toEntityWithUser(String token,FavoriteDTO favoriteDTO){
+
+        Favorite favorite = new Favorite();
+
+        String payLoadData = token;
+
+        if(payLoadData != null && payLoadData.startsWith("Bearer ")) {
+            payLoadData = payLoadData.substring(7).trim();
+        }
+
+        favorite.setUser(userRepository.findByLogin(jwtService.getLoginFromToken(payLoadData)).get());
         favorite.setProduct(productRepository.findById(favoriteDTO.getProductId()).get());
 
         return favorite;
