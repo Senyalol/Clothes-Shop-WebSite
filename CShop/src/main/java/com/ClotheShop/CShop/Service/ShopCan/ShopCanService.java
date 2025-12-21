@@ -18,4 +18,10 @@ public interface ShopCanService {
 
     void deleteShopCan(int id);
 
+    List<ShopCan> getMyShopCan(String token);
+
+    void deleteFromMyShopCan(int id, String token);
+
+    List<ShopCan> paid(String token);
+
 }

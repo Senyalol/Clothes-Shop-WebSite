@@ -43,8 +43,8 @@ public class ShopCanFacadeImpl implements ShopCanFacade {
     }
 
     @Override
-    public ShopCanDTO addToShopCan(ShopCanDTO dto) {
-        return shopCanMapper.toDTO(shopCanService.addToShopCan(shopCanMapper.toEntity(dto)));
+    public ShopCanDTO addToShopCan(String token , ShopCanDTO dto) {
+        return shopCanMapper.toDTO(shopCanService.addToShopCan(shopCanMapper.toEntityWithUser(token,dto)));
     }
 
     @Override
@@ -56,4 +56,47 @@ public class ShopCanFacadeImpl implements ShopCanFacade {
     public void deleteShopCan(int id) {
         shopCanService.deleteShopCan(id);
     }
+
+    @Override
+    public List<ShopCanDTO> getMyShopCan(String token) {
+
+        String payLoadData = getPayload(token);
+
+        return shopCanService.getMyShopCan(payLoadData).stream()
+                .map(x -> shopCanMapper.toDTO(x))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteFromMyShopCan(int id, String token) {
+
+        String payLoadData = getPayload(token);
+
+        shopCanService.deleteFromMyShopCan(id, payLoadData);
+
+    }
+
+    @Override
+    public List<ShopCanDTO> paid(String token) {
+
+        String payLoadData = getPayload(token);
+
+        return shopCanService.paid(payLoadData).stream()
+                .map(x -> shopCanMapper.toDTO(x))
+                .collect(Collectors.toList());
+
+    }
+
+    private String getPayload(String token) {
+
+        String payLoadData = token;
+
+        if(payLoadData != null && payLoadData.startsWith("Bearer ")) {
+            payLoadData = payLoadData.substring(7).trim();
+        }
+
+
+        return payLoadData;
+    }
+
 }

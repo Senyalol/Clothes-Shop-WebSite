@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Распродажи
 //Добавить сортировки по критериям
 //Нужно отслеживать доступность товара
 

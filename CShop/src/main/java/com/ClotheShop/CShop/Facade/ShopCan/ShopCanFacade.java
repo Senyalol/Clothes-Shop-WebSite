@@ -12,11 +12,16 @@ public interface ShopCanFacade {
 
     ShopCanDTO getShopCanById(int id);
 
-    ShopCanDTO addToShopCan(ShopCanDTO dto);
+    ShopCanDTO addToShopCan(String token, ShopCanDTO dto);
 
     ShopCanDTO updateShopCan(int id, ShopCanDTO dto);
 
     void deleteShopCan(int id);
 
+    List<ShopCanDTO> getMyShopCan(String token);
+
+    void deleteFromMyShopCan(int id, String token);
+
+    List<ShopCanDTO> paid(String token);
 
 }

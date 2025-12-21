@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 //Добавить метод покупки и оплаты товаров в корзине
-//Добавить корзину пользователя
+
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController
@@ -22,6 +22,8 @@ public class ShopCanController {
     public ShopCanController(ShopCanFacade facade) {
         this.shopFacade = facade;
     }
+
+    //Функционал администратора
 
     //Получить все корзины
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -44,13 +46,6 @@ public class ShopCanController {
         return shopFacade.getShopCanById(id);
     }
 
-    //Добавить товар в корзину
-    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
-    @PostMapping
-    public ShopCanDTO addShopCan(@RequestBody ShopCanDTO shopCanDTO){
-        return shopFacade.addToShopCan(shopCanDTO);
-    }
-
     //Обновить товар в корзине
     @PreAuthorize("hasAuthority('ADMIN')")
     @PatchMapping("/update/{id}")
@@ -63,6 +58,37 @@ public class ShopCanController {
     @DeleteMapping("/delete/{id}")
     public void deleteShopCan(@PathVariable int id){
         shopFacade.deleteShopCan(id);
+    }
+
+    //Пользовательский функционал
+
+    //Получить мои товары
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @GetMapping("/myCan")
+    public List<ShopCanDTO> myShopCan(@RequestHeader("Authorization") String token){
+        return shopFacade.getMyShopCan(token);
+    }
+
+    //Удалить из корзины моей
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @DeleteMapping("/deleteFromCan/{id}")
+    public void deleteFromCan(@PathVariable int id, @RequestHeader("Authorization") String token){
+        shopFacade.deleteFromMyShopCan(id, token);
+    }
+
+
+    //Добавить в корзину мою
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @PostMapping
+    public ShopCanDTO addShopCan(@RequestHeader("Authorization") String token ,@RequestBody ShopCanDTO shopCanDTO){
+        return shopFacade.addToShopCan(token,shopCanDTO);
+    }
+
+    //Оплатить товар
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+    @GetMapping("/paid")
+    public List<ShopCanDTO> paidShopCan(@RequestHeader("Authorization") String token){
+        return shopFacade.paid(token);
     }
 
 }
