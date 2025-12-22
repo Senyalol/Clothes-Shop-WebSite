@@ -16,9 +16,4 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true);
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder(4);
-//    }
-
 }

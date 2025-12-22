@@ -37,7 +37,7 @@ public class ProductImageController {
 
     //Добавить фотографию
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
+    @PostMapping("/add")
     public ProductImageDTO addProductImage(@RequestBody ProductImageDTO productImageDTO) {
         return productImageFacade.addProductImage(productImageDTO);
     }

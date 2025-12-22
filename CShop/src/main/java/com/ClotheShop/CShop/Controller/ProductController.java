@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
+    @PostMapping("/add")
     public ProductDTO addProduct(@RequestBody ProductDTO product){
         return productFacade.addProduct(product);
     }
