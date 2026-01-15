@@ -1,6 +1,7 @@
 package com.ClotheShop.CShop.Service.Product;
 
 import com.ClotheShop.CShop.Entity.Product;
+import com.ClotheShop.CShop.Service.Product.FilterFiles.FilterProducts;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ProductService {
 
     void deleteProduct(int id);
 
-    List<Product> filterProduct(Product product);
+    List<Product> filterProduct(FilterProducts filters);
 
     List<Product> findByName(String name);
 

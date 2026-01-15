@@ -2,7 +2,10 @@ package com.ClotheShop.CShop.Mapper;
 
 import com.ClotheShop.CShop.DTO.ProductDTO;
 import com.ClotheShop.CShop.Entity.Product;
+import com.ClotheShop.CShop.Service.Product.FilterFiles.FilterProducts;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ProductMapper {
@@ -42,6 +45,20 @@ public class ProductMapper {
 
         return productDTO;
 
+    }
+
+    //Маппинг для фильтров
+    public FilterProducts filterMapping(ProductDTO filterDTO) {
+
+        FilterProducts filterP = new FilterProducts();
+        filterP.setName(filterDTO.getName());
+        filterP.setColor(filterDTO.getColor());
+        filterP.setSize(filterDTO.getSize());
+        filterP.setSex(filterDTO.getSex());
+        filterP.setCategory(filterDTO.getCategory());
+        filterP.setType(filterDTO.getType());
+
+        return filterP;
     }
 
 }

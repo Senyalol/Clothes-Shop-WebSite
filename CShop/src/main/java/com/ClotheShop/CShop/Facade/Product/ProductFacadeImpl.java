@@ -50,7 +50,7 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public List<ProductDTO> filterProduct(ProductDTO product) {
-        return productService.filterProduct(productMapper.toEntity(product))
+        return productService.filterProduct(productMapper.filterMapping(product))
                 .stream()
                 .map(x -> productMapper.toDTO(x))
                 .collect(Collectors.toList());

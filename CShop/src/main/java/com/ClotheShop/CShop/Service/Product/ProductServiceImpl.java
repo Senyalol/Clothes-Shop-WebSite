@@ -3,8 +3,8 @@ package com.ClotheShop.CShop.Service.Product;
 import com.ClotheShop.CShop.Entity.Product;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Service.Product.Checks.CreateChecks.*;
-import com.ClotheShop.CShop.Service.Product.Checks.Filters.*;
 import com.ClotheShop.CShop.Service.Product.Checks.UpdateChecks.*;
+import com.ClotheShop.CShop.Service.Product.FilterFiles.FilterProducts;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,29 +103,20 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
 
+    //Фильтр по критериям товара
     @Transactional
     @Override
-    public List<Product> filterProduct(Product product) {
+    public List<Product> filterProduct(FilterProducts filters) {
 
-        try {
-
-            List<Filter> filters = new ArrayList<>(Arrays.asList(
-                    new FilterNameProd(),
-                    new FilterPriceProd(),
-                    new FilterSizeProd(),
-                    new FilterSexProd(),
-                    new FilterCategoryProd(),
-                    new FilterTypeProd()
-            ));
-
-            MainFilter result = new MainFilter(filters);
-
-            return result.getFilters(product,productRepository);
-
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return productRepository.findAll()
+                .stream()
+                .filter(x -> x.getName().equals(filters.getName()) || filters.getName() == null)
+                .filter(x -> x.getColor().equals(filters.getColor()) || filters.getColor() == null)
+                .filter(x -> x.getSize() == filters.getSize() || filters.getSize() == null)
+                .filter(x -> x.getSex().equals(filters.getSex()) || filters.getSex() == null)
+                .filter(x -> x.getCategory().equals(filters.getCategory()) || filters.getCategory() == null)
+                .filter(x -> x.getType().equals(filters.getType()) || filters.getType() == null)
+                .collect(Collectors.toList());
 
     }
 

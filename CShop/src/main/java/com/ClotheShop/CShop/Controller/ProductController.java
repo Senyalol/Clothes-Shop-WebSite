@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Таблица в БД - пункт выдачи
+//Элементы криптографии
+//Unit Tests
 //Распродажи
 //Добавить сортировки по критериям
 //Нужно отслеживать доступность товара
