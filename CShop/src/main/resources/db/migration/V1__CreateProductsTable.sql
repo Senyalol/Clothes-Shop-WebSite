@@ -8,5 +8,6 @@ CREATE TABLE product(
     size INTEGER ,
     sex VARCHAR(200),
     category VARCHAR(255) NOT NULL ,
-    type VARCHAR(255)
+    type VARCHAR(255),
+    rating INTEGER DEFAULT 0,
 );

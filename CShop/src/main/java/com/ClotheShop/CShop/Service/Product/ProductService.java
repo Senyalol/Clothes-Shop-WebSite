@@ -21,4 +21,6 @@ public interface ProductService {
 
     List<Product> findByName(String name);
 
+    List<Product> popularProducts();
+
 }

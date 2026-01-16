@@ -162,29 +162,34 @@ public class ShopCanServiceImpl implements ShopCanService{
 
             sendProduct(yourUserId);
 
-            cleanShopCan(yourUserId);
-
         }
+
         else{
             LOGGER.info("Недостаточно средств на балансе у пользователя - {}, баланс - {}, стоимость покупки - {}",yourUserId,yourBalance,totalCost);
+        }
+
+        if(!getMyShopCan(token).isEmpty()){
+            LOGGER.info("Нектороые товары , которые у вас в корзине теперь недоступны");
         }
 
         return shopCanRepository.findByUserId(yourUserId);
     }
 
-    private void cleanShopCan(int userId) {
+    private void cleanShopCan(int userId, Product buyedProduct) {
 
         List<ShopCan> shopCan = shopCanRepository.findByUserId(userId);
 
         for(ShopCan shopCanItem : shopCan){
 
-            int id = shopCanItem.getId();
-            shopCanRepository.deleteById(id);
+            if(shopCanItem.getProduct().equals(buyedProduct)){
+                shopCanRepository.deleteById(shopCanItem.getId());
+            }
 
         }
 
     }
 
+    //Доработать!!!!
     private void sendProduct(int userId){
 
         List<ShopCan> products = shopCanRepository.findByUserId(userId);
@@ -194,7 +199,21 @@ public class ShopCanServiceImpl implements ShopCanService{
             Product productFromCan = product.getProduct();
 
             Integer amount = productFromCan.getAmount();
-            amount -= 1;
+
+            if(amount > 0) {
+
+                //Убираем со склада товар
+                amount -= 1;
+
+                //Выставляем рейтинг товару
+                Integer oldRating = productFromCan.getRating();
+                oldRating++;
+
+                productFromCan.setRating(oldRating);
+
+                //Убираем товар из корзины
+                cleanShopCan(userId,productFromCan);
+            }
 
             productFromCan.setAmount(amount);
 

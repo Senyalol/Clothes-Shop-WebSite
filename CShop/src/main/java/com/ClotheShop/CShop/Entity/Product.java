@@ -43,6 +43,9 @@ public class Product {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "rating")
+    private Integer rating;
+
     @OneToMany(mappedBy = "product")
     private Set<Favorite> favorites = new LinkedHashSet<>();
 

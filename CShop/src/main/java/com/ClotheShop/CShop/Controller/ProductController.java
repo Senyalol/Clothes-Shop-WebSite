@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Сервис с фотками
+//Сервис с почтой
+//Выход из аккаунта user
 //Таблица в БД - пункт выдачи
 //Элементы криптографии
 //Unit Tests
 //Распродажи
-//Добавить сортировки по критериям
-//Нужно отслеживать доступность товара
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController

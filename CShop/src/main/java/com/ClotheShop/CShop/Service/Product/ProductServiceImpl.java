@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -123,6 +123,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findByName(String name) {
         return productRepository.findByName(name);
+    }
+
+    //Рейтинг товаров по продаваемости
+    @Override
+    public List<Product> popularProducts(){
+
+        return productRepository.findAll().stream()
+                .sorted(Comparator.comparingInt(Product::getRating).reversed())
+                .limit(6)
+                .collect(Collectors.toList());
+
     }
 
 }
