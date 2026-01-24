@@ -9,5 +9,5 @@ CREATE TABLE product(
     sex VARCHAR(200),
     category VARCHAR(255) NOT NULL ,
     type VARCHAR(255),
-    rating INTEGER DEFAULT 0,
+    rating INTEGER NOT NULL DEFAULT 0
 );

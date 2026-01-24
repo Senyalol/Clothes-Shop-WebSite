@@ -43,7 +43,7 @@ public class Product {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "rating")
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
     @OneToMany(mappedBy = "product")
