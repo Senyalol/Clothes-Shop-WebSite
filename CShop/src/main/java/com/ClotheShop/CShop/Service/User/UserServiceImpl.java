@@ -175,7 +175,8 @@ public class UserServiceImpl implements UserService {
                 new UserPasswordUpdateCheck(passwordEncoder),
                 new UserFirstNameUpdateCheck(),
                 new UserLastNameUpdateCheck(),
-                new UserSecretKeyUpdateCheck(secretKey)
+                new UserSecretKeyUpdateCheck(secretKey),
+                new UserEmailUpdateCheck(userRepository)
         );
 
         MainUserUpdateCheck userUpdateCheck = new MainUserUpdateCheck(updateChecks);
