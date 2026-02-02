@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.LocationShop;
 
-import com.ClotheShop.CShop.DTO.LocationShopDTO;
+import com.ClotheShop.CShop.DTO.ShopDTO.LocationShopDTO;
 import com.ClotheShop.CShop.Mapper.LocationShopMapper;
 import com.ClotheShop.CShop.Service.LocationShop.LocationShopService;
 import org.springframework.beans.factory.annotation.Autowired;

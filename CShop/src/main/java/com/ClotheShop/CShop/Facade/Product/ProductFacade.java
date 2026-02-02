@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.Product;
 
-import com.ClotheShop.CShop.DTO.ProductDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductDTO;
 
 import java.util.List;
 

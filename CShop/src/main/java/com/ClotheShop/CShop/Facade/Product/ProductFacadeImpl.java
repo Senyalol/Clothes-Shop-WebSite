@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.Product;
 
-import com.ClotheShop.CShop.DTO.ProductDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductDTO;
 import com.ClotheShop.CShop.Mapper.ProductMapper;
 import com.ClotheShop.CShop.Service.Product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

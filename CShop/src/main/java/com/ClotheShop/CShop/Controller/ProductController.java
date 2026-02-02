@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Controller;
 
-import com.ClotheShop.CShop.DTO.ProductDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductDTO;
 import com.ClotheShop.CShop.Facade.Product.ProductFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//Глянуть метод updateYourShop в Фасаде UserShop
+//Многопоточность
+//Глобальные исключения
 //Перегрузить интерфейсы для обновления пользователя
 //Вынести креды в гитигнор
 //Переход на страницу магазина
@@ -16,7 +19,8 @@ import java.util.List;
 //Выход из аккаунта user
 //Таблица в БД - пункт выдачи (Возможно нужно связать с пользователем)
 //Элементы криптографии
-//Unit Tests
+//Unit Tests (Покрыть весь проект)
+//Часто используемые участки кода вынести в один класс
 
 @CrossOrigin(origins = {"http://localhost:3000","http://localhost:5174"})
 @RestController

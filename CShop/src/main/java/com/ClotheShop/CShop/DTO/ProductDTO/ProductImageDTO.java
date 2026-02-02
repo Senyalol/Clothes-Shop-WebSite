@@ -1,4 +1,4 @@
-package com.ClotheShop.CShop.DTO;
+package com.ClotheShop.CShop.DTO.ProductDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

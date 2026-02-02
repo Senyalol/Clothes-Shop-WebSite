@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.ProductImage;
 
-import com.ClotheShop.CShop.DTO.ProductImageDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductImageDTO;
 import java.util.List;
 
 public interface ProductImageFacade {

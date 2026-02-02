@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.ProductImageDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductImageDTO;
 import com.ClotheShop.CShop.Entity.ProductImage;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;

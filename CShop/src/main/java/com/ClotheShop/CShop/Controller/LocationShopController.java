@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Controller;
 
-import com.ClotheShop.CShop.DTO.LocationShopDTO;
+import com.ClotheShop.CShop.DTO.ShopDTO.LocationShopDTO;
 import com.ClotheShop.CShop.Facade.LocationShop.LocationShopFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

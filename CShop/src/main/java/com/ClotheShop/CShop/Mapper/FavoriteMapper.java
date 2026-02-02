@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.FavoriteDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.FavoriteDTO;
 import com.ClotheShop.CShop.Entity.Favorite;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;

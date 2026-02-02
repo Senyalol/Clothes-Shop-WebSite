@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.Review;
 
-import com.ClotheShop.CShop.DTO.ReviewDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ReviewDTO;
 import com.ClotheShop.CShop.Mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

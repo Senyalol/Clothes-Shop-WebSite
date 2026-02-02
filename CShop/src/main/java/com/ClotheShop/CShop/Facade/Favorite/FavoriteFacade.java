@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.Favorite;
 
-import com.ClotheShop.CShop.DTO.FavoriteDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.FavoriteDTO;
 import java.util.List;
 
 public interface FavoriteFacade {

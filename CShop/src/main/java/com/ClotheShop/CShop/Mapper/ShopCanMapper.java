@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.ShopCanDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ShopCanDTO;
 import com.ClotheShop.CShop.Entity.ShopCan;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;

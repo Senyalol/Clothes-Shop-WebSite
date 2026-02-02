@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.Favorite;
 
-import com.ClotheShop.CShop.DTO.FavoriteDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.FavoriteDTO;
 import com.ClotheShop.CShop.Mapper.FavoriteMapper;
 import com.ClotheShop.CShop.Service.Favorite.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;

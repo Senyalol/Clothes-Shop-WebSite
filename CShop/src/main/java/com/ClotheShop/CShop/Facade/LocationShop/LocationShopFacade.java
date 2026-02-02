@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Facade.LocationShop;
 
-import com.ClotheShop.CShop.DTO.LocationShopDTO;
+import com.ClotheShop.CShop.DTO.ShopDTO.LocationShopDTO;
 
 import java.util.List;
 

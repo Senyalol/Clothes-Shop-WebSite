@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.ReviewDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ReviewDTO;
 import com.ClotheShop.CShop.Entity.Review;
 import com.ClotheShop.CShop.Repository.ProductRepository;
 import com.ClotheShop.CShop.Repository.UserRepository;

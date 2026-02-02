@@ -1,11 +1,9 @@
 package com.ClotheShop.CShop.Mapper;
 
-import com.ClotheShop.CShop.DTO.ProductDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductDTO;
 import com.ClotheShop.CShop.Entity.Product;
 import com.ClotheShop.CShop.Service.Product.FilterFiles.FilterProducts;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class ProductMapper {

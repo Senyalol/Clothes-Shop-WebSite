@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Controller;
 
-import com.ClotheShop.CShop.DTO.ProductImageDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ProductImageDTO;
 import com.ClotheShop.CShop.Facade.ProductImage.ProductImageFacade;
 import com.ClotheShop.CShop.Facade.ProductImage.ProductImageFacadeImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.ClotheShop.CShop.Controller;
 
-import com.ClotheShop.CShop.DTO.ShopCanDTO;
+import com.ClotheShop.CShop.DTO.ProductDTO.ShopCanDTO;
 import com.ClotheShop.CShop.Facade.ShopCan.ShopCanFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
