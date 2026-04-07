@@ -1,4 +1,4 @@
-package com.ClotheShop.CShop.Service.UserShop.CreateChecks;
+package com.ClotheShop.CShop.Service.UserShop.Checks.CreateChecks;
 
 import com.ClotheShop.CShop.Entity.UserShop;
 import com.ClotheShop.CShop.Repository.LocationShopRepository;

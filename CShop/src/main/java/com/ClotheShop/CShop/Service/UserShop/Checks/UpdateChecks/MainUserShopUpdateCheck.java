@@ -1,4 +1,4 @@
-package com.ClotheShop.CShop.Service.UserShop.UpdateChecks;
+package com.ClotheShop.CShop.Service.UserShop.Checks.UpdateChecks;
 
 import com.ClotheShop.CShop.Entity.UserShop;
 
